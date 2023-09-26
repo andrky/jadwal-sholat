@@ -1,29 +1,28 @@
 function prayerTimes(latitude, longitude) {
-	fetch('https://api.aladhan.com/v1/calendar?latitude='+latitude+'&longitude='+longitude+'&method=2')
-	.then(Response => Response.json())
-	.then(function (response) {
-		let date 	= new Date();
-		let today = date.getDate() - 1;
-		let data 	= response.data[today].timings;
+	fetch('https://api.aladhan.com/v1/calendar?latitude=' + latitude + '&longitude=' + longitude + '&method=4')
+		.then((Response) => Response.json())
+		.then(function (response) {
+			let date = new Date();
+			let today = date.getDate() - 1;
+			let data = response.data[today].timings;
+			let app = document.getElementById('app');
+			let table = document.createElement('table');
+			let tbody = document.createElement('tbody');
+			console.log(data);
 
-		let app 	= document.getElementById('app');
-		let table = document.createElement('table');
-		let tbody = document.createElement('tbody') ;
-		console.log(data);
-
-		for(i in data) {
-			let row		= tbody.insertRow();
-			let name	= row.insertCell(0);
-			let time 	=	row.insertCell(1) ;
-			name.innerHTML = i;
-			time.innerHTML = data[i];
-			tbody.appendChild(row);
-		}
-		table.appendChild(tbody);
-		app.appendChild(table);
-		// console.log(today)
-		// console.log(response.data[today]);
-	});
+			for (i in data) {
+				let row = tbody.insertRow();
+				let name = row.insertCell(0);
+				let time = row.insertCell(1);
+				name.innerHTML = i;
+				time.innerHTML = data[i];
+				tbody.appendChild(row);
+			}
+			table.appendChild(tbody);
+			app.appendChild(table);
+			// console.log(today)
+			// console.log(response.data[today]);
+		});
 }
 
 function success(position) {
@@ -31,7 +30,7 @@ function success(position) {
 }
 
 function error() {
-	alert('Posisi tidak dapat diakses')
+	prayerTimes('-4.045911', '139.248353');
 }
 
 function userLocation() {
